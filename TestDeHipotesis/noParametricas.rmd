@@ -1,0 +1,140 @@
+---
+title: "Tema 4"
+author: "Daniel Jaffet León Chávez"
+date: "12/10/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Creemos que, mediante el test de los rangos de Wilcoxon, 
+puede admitirse a nivel alpha =0’1 la hipótesis nula de un nivel medio poblacional de 6 en la calificación del test psicométrico.
+
+```{r, include= FALSE}
+act1 = data.frame(sujeto = 1:20, calificacion = c(5,5.5,5.7,4.5,4.8,7,7.8,7.3,6,6.3,8,4.9,5,5.4,7.5,7.6,5.2,5.6,6.1,6.9))
+act1
+
+library(knitr)
+```
+
+```{r, echo=FALSE}
+kable(act1[,1:2],caption = 'Calificaciones psicometría')
+```
+
+
+a) ¿Cuáles son nuestras hipótesis a contrastar?
+
+La hipótesis nula sería igual a admitir que el promedio de los alumnos es 6 y la hiótesis alternativa es igual a admitir que el promedio es menor o mayor a 6.
+
+
+b) ¿Qué nos dicen los resultados del test de Wilcoxon?
+
+```{r, echo=FALSE}
+wilcox.test(act1$calificacion, mu = 6, exact = F, correct = F)
+# Para Wilcoxon test, los argumentos EXACT y CORRECT solo se igual a True
+# si tengo más de 25 datos, y así nomalizo mi distribución para disminuir
+# errores
+```
+En este caso, se rechaza la hipótesis alternativa y se acepta la nula.
+
+## 2) Los datos de la siguiente Tabla son las calificaciones obtenidas en un test psicométrico,
+de escala 1-10, por veinte hombres y veinte mujeres. Creemos que, mediante el test Wilcoxon – Mann-Whitney,
+puede admitirse a nivel $\alpha$FEM =0’1 la hipótesis nula de igualdad de las medias poblacionales en la calificación del test psicométrico.
+
+```{r, include=FALSE}
+observacion = c(1:20)
+Hombres = c(5,5.5,5.7,4.5,4.8,7,7.8,7.3,6,6.3,8,4.9,5,5.4,7.5,7.6,5.2,5.6,6.1,6.9)
+Mujeres = c(4.7,5.8,5.4,4.8,4.5,7.3,7.5,7.6,5.7,6.6,7.7,5.2,4.7,5.7,7.8,7.3,5.5,5.3,6.4,6.6)
+act2= data.frame(observacion, Hombres, Mujeres)
+```
+
+```{r, echo=FALSE}
+kable(act2[,1:2])
+```
+
+### a) ¿Cuáles son nuestras hipótesis a contrastar?
+
+La hipotesis nula consiste en que las medias de cada muestra son las mismas y la alternativa consta de que las medias son distintas
+
+
+
+### b) ¿Qué nos dicen los resultados del test de Wilcoxon – Mann-Whitney?
+
+```{r}
+wilcox.test(act2$Hombres,act2$Mujeres, exact = F, correct = F)
+
+mean(act2$Hombres)
+mean(act2$Mujeres)
+
+
+```
+
+Justo como se observa, el p-value esta muy por encima de 0.05 y por tanto se rechaza 
+la hipótesis nula: en otras palabras, las medias son las mismas para ambas muestras
+
+## 3) Los datos de la siguiente tabla pertenecen a las calificaciones finales en matemática evaluadas de 0 a 10 de 134 alumnos de tres cursos de 3º de Secundaria. Creemos que, mediante el test de Kolmogorov-Smirnov, pueden admitir como modelo una distribución normal N(5’5,1).
+
+```{r, include= F}
+calif <-c(52,52,63,63,63,64,64,64,64,64,68,68,68,68,70,70,71,71,
+73,73,73,73,73,75,75,75,75,75,80,80,80,80,82,82,82,84,84,
+87,87,87,87,87,89,89,89,89,89,95,95,95)
+calificacion = data.frame(calif)
+```
+
+```{r, echo=F}
+kable(calificacion[,1], caption = 'calificaciones de jovenes de 3° Secundaria')
+```
+
+### a) ¿Cuáles son nuestras hipótesis a contrastar?
+
+La nula consta de que la media es de 5.5 y que la desv. es de 1, y la alternativa
+constaría de que la media y desviaciones no son iguales a 5.5 y 1 respectivamente-
+
+### b) ¿Qué nos dicen los resultados del test de Kolmogorov-Smirnov?
+
+```{r, echo=F}
+ks.test(calificacion$calif, 'pnorm', 5.5,1)
+
+mean(calificacion$calif)
+sd(calificacion$calif)
+
+```
+Como se puede ver, el pvalue refleja que debemos aceptar la hipotesis alternativa
+y que por tanto la media y la desv. no son ni 5.5 ni 1, respectivamente.
+
+## 4) Los datos de la siguiente tabla pertenecen a la producción en toneladas por Ha de remolacha tras utilizar tres tipos de fertilizantes. Queremos analizar si existen diferencias significativas entre los diferentes tratamientos, mediante el test de Kruskal-Wallis. Las hectáreas fueron dispuestas al azar:
+
+```{r, include=F}
+
+pesos = data.frame('tratamiento 1' = c(150,152,154,153,151), 'tratamiento 2' = c(156,160,158,157,159), 'tratamiento 3' = c(145,144,149,148,147))
+pesos
+
+kable(pesos[,1:3], caption = "Producción por toneladas agrupados por fertilizante")
+```
+
+```{r, echo=F}
+kable(pesos[,1:3], caption = "Producción por toneladas agrupados por fertilizante")
+```
+
+
+### a) ¿Cuáles son nuestras hipótesis a contrastar?
+
+La hipotesis nula es igual a que las medias de las 3 muestras y la hipotesis 
+alternativa es igual a que al menos la media de uno de las 3 muestras es distinta
+
+### b) ¿Qué nos dicen los resultados del test de Kruskal-Wallis?
+
+```{r, echo=F}
+kruskal.test(pesos$tratamiento.1,pesos$tratamiento.2,pesos$tratamiento.3)
+
+mean(pesos$tratamiento.1)
+mean(pesos$tratamiento.2)
+mean(pesos$tratamiento.3)
+```
+Al observar el test y ver que el p-value arroja un resultado mayor a 0.05, se puede
+concluir que las medias de las muestras son muy similares y no hay dominancia o muchas diferencias entre ellas
+
+
+## Como nota personal: Wilcoxon sirve para observar para UNA VARIABLE si hay cambios o no en la media; Wilcoxon Mann-Whitney sirve para comparar dos variables y estudiar si son medias son iguales o cambian; Kolmogorov Smirnov sirve para UNA VARIABLE y demuestra si es verdad o falso suponer que tiene un x mediana y una y desviación estándar; Kruskall-Wallis es una evolución de chi cuadrado, funciona con 2 o más variables, y permite ver la dominancia de alguna de ellas (si la media es distinta para una variable en particular)
