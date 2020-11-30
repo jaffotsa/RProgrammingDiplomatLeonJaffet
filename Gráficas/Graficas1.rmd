@@ -1,0 +1,113 @@
+---
+title: "Tarea Estadística Descriptiva"
+author: "Daniel Jaffet León Chávez"
+date: "28/9/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#  Ejercicios:
+
+## Ejercicio 1: 
+Realice un gráfico de barras de color azul de las ganancias en millones de euros de los clubes de fútbol siguientes. Titúlelo “Ganancias año 2013” (en R o SPSS):
+
+Manchester 300
+
+Real Madrid 280
+
+Barcelona 200
+
+Milán 180
+
+Juventus 150
+
+## Respuesta:
+
+```{r}
+din = c(300,280,200,180,150)
+equipos = c('manchesgter','real madrid','barcelona','milan','juventus')
+barplot(din,names=equipos,col = "blue", )
+```
+
+## Ejercicio 2:
+Realice con los datos del ejercicio anterior un gráfico de sectores. Le dará los siguientes colores al gráfico: rojo-Manchester, amarillo-RealMadrid, azul-Barcelona, gris-Milán, negro-Juventus (en R o SPSS)
+
+## Respuesta:
+```{r}
+din = c(300,280,200,180,150)
+equipos = c('manchesgter','real madrid','barcelona','milan','juventus')
+barplot(din,names=equipos,col = c("red","yellow","blue","gray","black"), xlab = "equipos", ylab = "ganancias en millones de Euros", args.legend = TRUE)
+```
+
+ 
+
+## Ejercicio 3
+Realice una nube de puntos de los siguientes datos (en R).
+
+X (calificaciones primer cuatrimestre):   2,2,3,3,3,4,4,4,4,4,5,5,5,5,5,5,5,5,6,6,6,6,6,7,7,8,8,9,9
+
+Y (calificaciones segundo cuatrimestre): 3,3,4,4,4,5,5,5,5,5,6,6,6,6,6,6,6,6,7,7,7,7,7,8,8,9,9,9,9
+
+ 
+
+Titule los ejes de coordenadas como pone entre paréntesis y utilice el símbolo “punto negro sin relleno” en color rojo.
+
+## Respuesta:
+
+```{r}
+prim =c(2,2,3,3,3,4,4,4,4,4,5,5,5,5,5,5,5,5,6,6,6,6,6,7,7,8,8,9,9)
+seg=c(3,3,4,4,4,5,5,5,5,5,6,6,6,6,6,6,6,6,7,7,7,7,7,8,8,9,9,9,9)
+
+plot(x=prim,y=seg, pch=1, col='red')
+
+```
+
+
+ 
+
+## Ejercicio 4:
+Realice un gráfico de cajas con 1000 datos de una distribución normal estandarizada en color gris (en R)
+
+Respuesta:
+```{r}
+boxplot(rnorm(1000),col = "gray")
+```
+
+
+
+## Ejercicio 5:
+Realice la media, mediana, cuasivarianza, cuasidesviación típica, cuantiles y compruebe lo anterior con la función summary de los siguientes datos (en R):
+
+            2,4,5,10,12,20,21,22,115,170,500,1001
+
+
+            Dé su opinión sobre los resultados obtenidos en media y mediana.
+          
+## Respuestas:
+
+```{r}
+op = c(2,4,5,10,12,20,21,22,115,170,500,1001)
+
+mean(op)
+median(op)
+var(op)
+sd(op)
+quantile(op)
+
+summary(op)
+```
+
+
+
+## Ejercicio 6:
+Extraiga de R 500 datos de la distribución normal N(0,1) mediante un vector. Luego, represéntela gráficamente (en R).
+
+## Respuesta:
+```{r}
+normal = rnorm(500)
+normal = as.numeric(normal)
+plot(normal)
+hist(normal,main = 'histograma de 500 datos de la dist. normal',xlab="datos")
