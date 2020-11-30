@@ -1,0 +1,143 @@
+---
+title: "Tema 8. Regresion Lineal y Correlación Simples"
+author: "Daniel Jaffet León Chávez"
+date: "29/10/2020"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=F}
+library(knitr)
+library(tinytex)
+library(rmarkdown)
+```
+
+
+# 1)      Se tiene la creencia que existe una relación entre el número de cigarrillos fumados diariamente 
+# en horas de trabajo (X) por una serie de trabajadores de una empresa y el número de minutos perdidos de trabajo diarios (Y).
+
+```{r, include=F}
+
+x1=c(4,5,6,8,7,5,4,3,6,9)
+y1=c(25,32,34,45,42,29,24,20,33,50)
+data1 = data.frame(x1, y1)
+
+```
+
+```{r, echo=F}
+
+kable(data1, caption= "Cigarrillos fumados y minutos perdidos")
+
+```
+
+## a) Determine la recta de mínimos cuadrados y contraste la hipótesis nula (las variables X e Y no están relacionadas linealmente) 
+## frente a la hipótesis alternativa (de que sí lo están), a nivel $\alpha$ = 0’1.
+
+Primero, definamos las hipotesis:
+
+H0 = No existe correlación entre número de cigarrillos consumidos y minutos laborales perdidos
+H1 = Existe correlación entre número de cigarrillos consumidos y minutos laborales perdidos
+
+Establezcamos la ecuación de la regresión lineal
+
+```{r, include=T}
+recta = lm(y1~x1, data = data1)
+
+recta
+```
+
+Ahora bien, establezcamos la aceptación o rechazo de la hipotesis nula con summary:
+
+```{r, include=T}
+summary(recta)
+
+```
+
+Los valores P del intercepto y de x son inferiores a 0.05, por tanto se podría rechazar 
+la hipotesis nula y aceptar que existe correlación, con un R cuadrado de 0.98, muy cercano a 1
+
+
+
+ 
+
+## b) Calcule el Anova de la Regresión Simple propuesta para contrastar datos y represente gráficamente la recta sobre la nube de puntos.
+
+Hagamos la auscultación gráfica:
+
+```{r, include=T}
+recta = lm(y1~x1, data = data1)
+
+plot(data1$x1,data1$y1)
+abline(recta)
+```
+
+Hagamos el anova:
+
+```{r, include=T}
+recta = lm(y1~x1, data = data1)
+anova(recta)
+```
+
+El P valor es inferior a .05, por lo tanto confirma los resultados anteriores
+
+
+## c) Analice la Normalidad de los Residuos.
+
+```{r}
+resid(recta)
+mean(resid(recta))
+```
+El valor del residuo es negativo pero tiende a 0. De acuerdo con el sitio Wolter Kluer: _Los residuos pueden ser nulos, 
+positivos o negativos. Si son nulos entonces no existe ningún error en la estimación, ya que, los valores observados coinciden con los valores estimados. 
+Si es positivo entonces el valor observado de Y es mayor que el valor estimado lo que implica que se infraestima la variable Y, si por el contrario,
+el residuo es negativo entonces el valor observado de Y es menor que su valor estimado y por lo tanto se sobreestima la variable Y._ 
+
+De lo anterior, se puede inferir que el residuo de nuestra regresión indica que si bien, 
+es negativo y muy pequeño, esta infimamente sobrestimando la variable dependiente.
+
+Ahora bien, hagamos un normal plot e histograma para ver su comportamiento de forma gráfica:
+
+```{r, echo=F}
+
+qqnorm(resid(recta))
+
+hist(resid(recta))
+
+```
+
+En el gráfico qqnorm, no se acoplan los datos a la traza, y además, en el histograma se nota un sesgo
+a la derecha, por tanto se puede afirmar con reservas que estamos ante una distribución que tiende ligeramente a ser normal.
+
+# 2) Haga la Correlación Lineal del ejercicio anterior:
+“Se tiene la creencia que existe una relación entre el número de cigarrillos fumados 
+diariamente en horas de trabajo (X) por una serie de trabajadores de una empresa y el número de minutos perdidos de trabajo diarios (Y)”.
+
+```{r, echo=T}
+
+kable(data1, caption= "Cigarrillos fumados y minutos perdidos")
+
+```
+
+Se establecen las hipotesis:
+
+H0: p= 0
+H1: p $\neq$ 0
+
+Donde p es el coeficiente de correlación de Pearson
+
+```{r, include=T}
+cor.test(data1$x1,data1$y1,conf.level=0.99, method = "pearson")
+
+```
+
+El P valor es muy inferior a 0.05 y por tanto se acepta la hipotesis alternativa. 
+El coeficiente de correlación de Pearson es 0.9912736 (positivo), y además, confirma los resultados del análisis de regresión simple.
+
+Referencias:
+
+### Wolters Kluer (s/f). "Residuos" [Recurso en Línea] Recuperado de: https://guiasjuridicas.wolterskluwer.es/Content/Documento.aspx?params=H4sIAAAAAAAEAMtMSbF1jTAAASMzAyNTtbLUouLM_DxbIwMDS0NDIwOQQGZapUt-ckhlQaptWmJOcSoAYgKbrDUAAAA=WKE
