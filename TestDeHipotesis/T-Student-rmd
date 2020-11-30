@@ -1,0 +1,52 @@
+---
+title: "Tema 5"
+author: "Daniel Jaffet León Chávez"
+date: "12/10/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 1) Calcule la densidad de la t de Student para n=5, 12, 30 y 45 grados de libertad de 100 datos.
+# ¿A partir de cuántos n grados de libertad, de los cuatro propuestos ya es prácticamente la normal N(0,1)?
+
+```{r}
+par(mfrow=c(2,2))
+x<-seq(-3,3,len=100)
+
+plot(x,dt(x,5),type="l",col=2,main="n=5")
+lines(x,dnorm(x),col=1,lty=2)
+
+plot(x,dt(x,12),type="l",col=2,main="n=12")
+lines(x,dnorm(x),col=1,lty=2) 
+
+plot(x,dt(x,30),type="l",col=2,main="n=30")
+lines(x,dnorm(x),col=1,lty=2)
+
+plot(x,dt(x,45),type="l",col=2,main="n=45")
+lines(x,dnorm(x),col=1,lty=2)
+
+```
+ 
+Con 45 grados de libertad, la distribución t-student se aproxima a un ajuste casi perfecto a la distribución normal
+
+# 2) Queremos saber si hay diferencias entre sexos (Sex) en cuanto al pulso (Pulse) 
+# de los datos del data.frame survey del paquete MASS.  Mediante el test de la t de Student.
+
+```{r, include=TRUE}
+attach(survey)
+t.test(Pulse~Sex)
+```
+
+
+## a) ¿Cuáles son nuestras hipótesis?
+
+La nula es que la media de hombres y mujeres es la misma, y la alternativa es igual a que las medias para ambos sexos son distintas
+
+## b) ¿Qué nos dicen los datos extraídos del test de la t de Student?
+## ¿A qué pueden ser debidos los resultados obtenidos del p-valor del test?
+
+El valor es muy superior a 0.05, y ademas tenemos una media de 75 para las mujeres y 73 para 
+los hombres: no hay diferencias significativas entre ambas muestras para el pulso que presentan.
