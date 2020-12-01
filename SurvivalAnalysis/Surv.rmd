@@ -1,0 +1,41 @@
+---
+title: "Tema 11"
+author: "León Chávez Daniel Jaffet"
+date: "11/26/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 1) Calcule el Análisis de Supervivencia de las siguientes dos variables time y status, de quince individuos.
+# Tiempo de supervivencia que llamamos time, en semanas. Status, si hay éxito (1) en el tiempo de supervivencia o no (0). 
+# Represente la curva de supervivencia y calcule las probabilidades de supervivencia.
+
+ 
+```{r}
+library(survival)
+
+time<-c(55,62,57,48,47,54,42,43,59,57,49,52,51,43,49)
+status<-c(1,1,1,0,0,1,1,0,0,0,0,0,1,1,1)
+
+datum = data.frame(time,status)
+
+modelo = survfit(Surv(time,status)~1, data = datum, se.fit=T, conf.int=.95,type = "kaplan-meier")
+
+plot(modelo, col="red", lwd=2, conf.int = F, xlab = "Semanas", ylab = "Probabilidad de Supervivencia")
+
+```
+
+Como puede apreciarse, desde la semana 42 empieza la muerte de los pacientes. Veamos la probabilidad de supervivencia:
+
+```{r}
+
+summary(modelo)
+
+```
+
+Como puede apreciarse, a la semana 42 inicia la mortalidad con una probabilidad de 93% de supervivencia; 
+a la semana 43 desciende hasta 86% pero para la semana 51 comienza a deteriorarse hasta 68%, y para la semana 57 
+es de 34%, hasta llegar a la semana 62 con 0% de probabilidad de superviviencia.
