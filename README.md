@@ -10,7 +10,9 @@ Here you will learn how to apply in R:
 ## Robust Regression (Yohai Regression, Huber etc...)
 ## Mixed Linear Models
 ## Survival Analysis
+## GAM
+## Regression Tree
 
-You'll find simple vectors with toy data to practice! 
+You'll find simple vectors with toy data to practice! And I will add in the future AR, MA, ARMA, ARIMA and Robust Correlation ;)
 
 Cheers!
