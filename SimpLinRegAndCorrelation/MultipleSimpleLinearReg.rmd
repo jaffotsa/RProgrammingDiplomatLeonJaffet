@@ -1,0 +1,72 @@
+---
+title: "Tema 8"
+author: "Daniel Jaffet León Chávez"
+date: "7/11/2020"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r, include=F}
+library(knitr)
+
+```
+
+
+## 1) Se cree que existe una relación lineal entre el tiempo de estancia en días en laboratorio (Y) desde que se aplica un tumor a los ratones y se aplica un medicamento (a los 14 días) (“cantidad” de medicamento en mg) a tales ratones y el “tamaño” de desarrollo del tumor medido en mm³:
+
+```{r, include=F}
+y<-c(2,1,20,21,33,35,37,36,39,38,32,28,27,36,35,34,37,38,39,37,38,39,55,52,35)
+
+cantidad<-c(0,0,2,2,3,2,2,2,3,3,2,2,3,3,1,1,1,2,2,2,3,2,1,1,2)
+
+tamano<-c(0,0,25000,26000,30000,18000,18000,18000,15000,15000,29000,28000,
+          26000,17000,16000,18000,19000,16000,14000,19000,14000,13000,55000,48000,15000)
+
+datos = data.frame(y,cantidad,tamano)
+datos
+
+```
+
+
+```{r, echo=F}
+
+kable(datos, label = "datos")
+
+```
+
+### Calcule la regresión múltiple:
+
+Comencemos definiendo el hiperplano:
+
+```{r, include=T}
+hiperplano = lm(y ~ cantidad + tamano, data = datos)
+
+summary(hiperplano)
+
+```
+
+Los P valores de cantidad son mayores a 0.05, por lo tanto, apliquemos el test de Akaike para observar el comportamiento de las variables:
+
+```{r}
+library(MASS)
+
+hiperplano = lm(y ~ cantidad + tamano, data = datos)
+step = stepAIC(hiperplano, direction="both")
+
+
+```
+
+calculemos las regresiones por separado:
+
+```{r}
+
+regcantidad = lm(y ~ cantidad, data = datos)
+summary(regcantidad)
+
+regtamano = lm(y ~ tamano, data = datos)
+summary(regtamano)
+
+```
+
+Efectivamente, los valores P con tamaño son menores a 0.05 y aceptamos dicha regreisón, donde la R cuadrada no es significativa para entablar una correlación pues el R cuadradado es igual a 0.375
