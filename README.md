@@ -1,5 +1,5 @@
-# RProgrammingDiplomatUAEMLeonJaffet
-Hey! Here I'm going to share you what I've done for accomplish my R Programming Diplomat (Universidad Autónoma del Estado de Morelos - Autonomous University of the Morelos State).
+# Econometrics in R
+Hey! Here I'm going to share with you code in R to understand and apply Econometrics and Advanced Statistics
 
 Here you will learn how to apply in R:
 
