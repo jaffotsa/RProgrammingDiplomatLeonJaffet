@@ -1,0 +1,22 @@
+# We're going to analyze the prices for Crude Oil for members of the OPEC. The data used for this code es available at: https://asb.opec.org/data/ASB_Data.php
+# For this case, I used the Data available for monthly prices for "Mexico Istmo", between january 1983 and december 2019
+
+# NOTE: We already know the prices for 2020 (even negative), but in order to show you how to develop an ARIMA model in R, we're gong to "forecast" 2020 prices
+
+# Estimemos un modelo ARIMA para proyectar
+# el precio del petroleo
+
+library(forecast)
+
+arimaPET = auto.arima(Serie, stepwise = F,
+                      approximation = F,
+                      trace = T)
+
+proy = forecast(arimaPET,d=1,D=1,h=12, level = 95)
+
+checkresiduals(arimaPET)
+
+plot(proy, xlim = c(2010,2021))
+autoplot(proy)
+
+print(proy)
